@@ -17,6 +17,12 @@ void framebuffer_size_callback(GLFWwindow*, int, int);
 // Callback function designed to be called everytime the window is resized
 // for adjusting the viewport
 
+void handleInput(GLFWwindow*);
+// Simple function for handling user input. Will be called in our main loop
+
+void renderItems(GLFWwindow*);
+// Clears the screen with a certain color and draws everything needed
+
 int main() {
 
 	// Basic startup of glfw
@@ -72,6 +78,12 @@ int main() {
 	// Create a basic rendering loop
 	while (!glfwWindowShouldClose(window)) {
 
+		// Handle user input
+		handleInput(window);
+
+		// Render
+		renderItems(window);
+
 		// Perform the double buffer goodness and display whatever is on the back buffer
 		glfwSwapBuffers(window);
 		
@@ -90,5 +102,27 @@ int main() {
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 	glViewport(0, 0, width, height);
+
+}
+
+// Handles basic user input
+void handleInput(GLFWwindow *window) {
+
+	// Some simple checks to see if the user pressed escape
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+
+		// If escape is detected as pressed, then close the window gracefully
+		glfwSetWindowShouldClose(window, true);
+
+	}
+
+}
+
+// Handles basic window rendering
+void renderItems(GLFWwindow *window) {
+
+	// Set the clear color, then clear the screen
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 }
